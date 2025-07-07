@@ -271,10 +271,11 @@
 
       document.getElementById("loading").style.display = "flex";
 
-      fetch("http://127.0.0.1:5000/kompres", {
-        method: "POST",
-        body: formData
-      })
+      fetch("https://kompresi-digital--zebuaraimond.repl.co/kompres", {
+  method: "POST",
+  body: formData
+})
+
       .then(res => res.text())
       .then(data => {
         setTimeout(() => {
