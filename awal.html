@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kompresi Citra Digital</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background-color: #002b5c;
+      color: white;
+      text-align: center;
+      padding: 25px 15px;
+    }
+    .logo-container img { width: 80px; margin-bottom: 10px; }
+    header h1 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+    .container { display: flex; min-height: 100vh; }
+    .sidebar {
+      background-color: #002b5c;
+      color: white;
+      width: 220px;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+    .sidebar .logo { font-size: 20px; margin-bottom: 30px; }
+    .sidebar ul { list-style: none; padding: 0; }
+    .sidebar ul li {
+      margin: 15px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      padding-bottom: 10px;
+    }
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-left: 10px;
+    }
+    .sidebar ul li a.active, .sidebar ul li a:hover {
+      background-color: #004080;
+      padding: 8px;
+      border-radius: 5px;
+    }
+    .content {
+      flex: 1;
+      padding: 30px;
+      background-color: #f5f5f5;
+    }
+    .form-section {
+      display: none;
+    }
+    .form-section.active {
+      display: block;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #0055a5;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover { background-color: #003f7d; }
+    footer {
+      text-align: center;
+      padding: 18px 10px;
+      background-color: #002b5c;
+      color: white;
+      font-size: 14px;
+    }
+    .image-compare {
+      display: flex;
+      gap: 40px;
+      margin-top: 20px;
+    }
+    .image-compare img {
+      max-width: 250px;
+      border: 1px solid #ccc;
+      padding: 5px;
+      background: white;
+    }
+
+    #loading {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255,255,255,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .loading-spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #0055a5;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* RESPONSIF */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 10px 0;
+        box-shadow: none;
+        overflow-x: auto;
+      }
+
+      .sidebar .logo {
+        display: none;
+      }
+
+      .sidebar ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+      }
+
+      .sidebar ul li {
+        margin: 0;
+        padding: 0;
+        border: none;
+      }
+
+      .sidebar ul li a {
+        padding: 10px 15px;
+        font-size: 14px;
+      }
+
+      .content {
+        padding: 20px 15px;
+      }
+
+      .image-compare {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .image-compare img {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="20250625_014000.png" alt="kompresi lossy" />
+      <h1>KOMPRESI CITRA DIGITAL</h1>
+      <h2>METODE LOSSY</h2>
+    </div>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <h2 class="logo">📸 Kompresi</h2>
+      <nav>
+        <ul>
+          <li><a href="#beranda" class="active"><i class='bx bx-home'></i> Beranda</a></li>
+          <li><a href="#upload"><i class='bx bx-upload'></i> Upload & Kompresi</a></li>
+          <li><a href="#hasil"><i class='bx bx-image'></i> Hasil Kompresi</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <!-- Beranda -->
+      <form id="beranda" class="form-section active">
+        <h1>Beranda</h1>
+        <p>Kompresi lossy adalah metode untuk mengurangi ukuran file gambar dengan menghilangkan sebagian data.
+        Tujuannya adalah mempercepat pengiriman dan penyimpanan data di lingkungan kampus. Metode ini berguna untuk
+        sistem informasi, e-learning, dan dokumentasi digital yang lebih efisien.</p>
+      </form>
+
+      <!-- Upload -->
+      <form id="upload" class="form-section" enctype="multipart/form-data">
+        <h1>Upload & Kompresi</h1>
+        <label>Pilih Gambar:</label>
+        <input type="file" name="gambar" id="gambar" required>
+        <img id="preview" src="#" alt="Preview" style="max-width: 200px; margin-top: 10px; display: none;" />
+        <label>Pilih Kualitas Kompresi:</label>
+        <select name="kualitas" id="kualitas">
+          <option value="high">Tinggi</option>
+          <option value="medium">Sedang</option>
+          <option value="low">Rendah</option>
+        </select>
+        <button type="submit">Kompres Sekarang</button>
+      </form>
+
+      <!-- Hasil Kompresi -->
+      <div id="hasil" class="form-section">
+        <h1>Hasil Kompresi</h1>
+        <div id="hasil-output"></div>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; Kelompok Aloaaa - Teknik Informatika</p>
+  </footer>
+
+  <div id="loading">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <script>
+    const sections = document.querySelectorAll('.form-section');
+    const links = document.querySelectorAll('.sidebar a');
+
+    links.forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetID = this.getAttribute('href').substring(1);
+
+        sections.forEach(sec => {
+          sec.classList.remove('active');
+          if (sec.id === targetID) {
+            sec.classList.add('active');
+          }
+        });
+
+        links.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    document.getElementById("upload").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const formData = new FormData();
+      const gambar = document.getElementById("gambar").files[0];
+      const kualitas = document.getElementById("kualitas").value;
+      formData.append("gambar", gambar);
+      formData.append("kualitas", kualitas);
+
+      document.getElementById("loading").style.display = "flex";
+
+      fetch("http://127.0.0.1:5000/kompres", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.text())
+      .then(data => {
+        setTimeout(() => {
+          document.getElementById("loading").style.display = "none";
+
+          document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+          document.getElementById("hasil").classList.add("active");
+          document.getElementById("hasil-output").innerHTML = data;
+
+          document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+          document.querySelector('.sidebar a[href="#hasil"]').classList.add('active');
+        }, 2000);
+      })
+      .catch(err => {
+        alert("Gagal mengunggah gambar.");
+        document.getElementById("loading").style.display = "none";
+      });
+    });
+
+    document.getElementById("gambar").addEventListener("change", function (event) {
+      const file = event.target.files[0];
+      const preview = document.getElementById("preview");
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          preview.src = e.target.result;
+          preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
